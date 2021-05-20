@@ -1,10 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { css } from '@leafygreen-ui/emotion';
+import { uiColors } from '@leafygreen-ui/palette';
+import { normalizePath } from '../utils/normalize-path';
+import { theme } from '../theme/docsTheme';
 import ComponentFactory from './ComponentFactory';
 import Link from './Link';
-import { normalizePath } from '../utils/normalize-path';
 
-const RefRole = ({ nodeData: { children, domain, fileid, name, url }, slug }) => {
+const cardRefStyling = css`
+  background: ${uiColors.gray.light3};
+  border-radius: ${theme.size.tiny};
+  border: 1px solid rgba(184, 196, 194, 0.48);
+  box-sizing: border-box;
+  display: inline-block;
+  font-size: ${theme.fontSize.small};
+  font-weight: 600;
+  margin-bottom: ${theme.size.small};
+  margin-right: ${theme.size.small};
+  padding: ${theme.size.tiny};
+
+  &:after {
+    content: ' ➔';
+  }
+`;
+
+const RefRole = ({ nodeData: { children, fileid, url }, slug }) => {
   // Render intersphinx target links
   if (url) {
     return (
@@ -34,6 +54,7 @@ const RefRole = ({ nodeData: { children, domain, fileid, name, url }, slug }) =>
   }
 
   return (
+    // className={cx(cardRefStyling)}
     <Link to={normalizePath(link)}>
       {children.map((node, i) => (
         <ComponentFactory key={i} nodeData={node} />

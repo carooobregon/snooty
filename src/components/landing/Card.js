@@ -19,6 +19,10 @@ const StyledCard = styled(LeafyGreenCard)`
   p:last-of-type {
     margin-bottom: 0;
   }
+
+  &:hover {
+    box-shadow: ${({ url }) => (url ? `` : `0 4px 10px -4px rgba(6,22,33,0.3)`)};
+  }
 `;
 
 const CardIcon = styled('img')`
@@ -89,9 +93,14 @@ const Card = ({
   const Icon = isCompact ? CompactIcon : CardIcon;
   return (
     <Card
-      onClick={() => {
-        window.location.href = url;
-      }}
+      onClick={
+        url
+          ? () => {
+              window.location.href = url;
+            }
+          : undefined
+      }
+      url={url}
     >
       {icon && (
         <ConditionalWrapper
